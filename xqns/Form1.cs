@@ -73,8 +73,8 @@ namespace xqns
             if (textBox1.Text!="" && textBox2.Text != "" && textBox3.Text != "")
             {
                 timer1.Enabled = true;
-                timer1.Interval = 10000;
-                label5.Text = "10秒后连接";
+                timer1.Interval = 5000;
+                label5.Text = "5秒后自动连接";
             }else
             {
              label5.Text = "";
@@ -137,6 +137,13 @@ namespace xqns
                 AssemblyInstaller1.Uninstall(null);
                 AssemblyInstaller1.Dispose();
                 label5.Text = "卸载完成";
+
+                button3.Enabled = true;
+                安装服务IToolStripMenuItem.Enabled = true;
+                button4.Enabled = false;
+                卸载服务RToolStripMenuItem.Enabled = false;
+
+            
             }
                 catch (Exception ex)
                 {
@@ -165,6 +172,13 @@ namespace xqns
                 AssemblyInstaller1.Commit(null);
                 AssemblyInstaller1.Dispose();
                 label5.Text = "安装完成";
+
+
+                button3.Enabled = false;
+                安装服务IToolStripMenuItem.Enabled = false;
+                button4.Enabled = true;
+                卸载服务RToolStripMenuItem.Enabled = true;
+
                 ServiceStart();
                 label5.Text = "服务已启动";
             }
@@ -376,9 +390,7 @@ namespace xqns
               xmlDoc.Save("xqns.xml");              
             }
             catch { MessageBox.Show("配置文件写入失败！"); }
-
             login();
-
         }
         
         private void login()
@@ -388,11 +400,12 @@ namespace xqns
             timer1.Enabled = false;
             return;
             }
-            url = loginurl + "?type=domain&user=" + textBox1.Text.Trim() + "&c=md5&cz=login&ver=V3.0&pass=" + md5(textBox2.Text.Trim() + textBox3.Text.Trim());
+            ///构造get请求，see URL: https://www.xqns.com/article/5
+            url = loginurl + "?type=domain&c=md5&cz=login&ver=V3.0&user=" + textBox1.Text.Trim() + "&pass=" + md5(textBox2.Text.Trim() + textBox3.Text.Trim());
 
             label5.Text = "正在连接";
 
-            ////设置计时器，不管结果如何，计时器启用，并且重连时间为30秒
+            ////设置计时器，计时器启用，并且重连时间为30秒
             timer1.Enabled = true;
             timer1.Interval = 30000;
 
@@ -401,8 +414,7 @@ namespace xqns
             if (res == null)
             {
                 label5.Text = "网络错误";
-
-                    //    MessageBox.Show("IP更新出错，连接超时，等待下次尝试");
+                //    MessageBox.Show("IP更新出错，连接超时，等待下次尝试");
                     return;
             }
             else
