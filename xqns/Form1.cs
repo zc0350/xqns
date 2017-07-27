@@ -134,9 +134,9 @@ namespace xqns
 
             
             }
-                catch (Exception ex)
-                {
-                MessageBox.Show(ex.Message);
+            catch // (Exception ex)
+            {
+                MessageBox.Show("发生错误：请尝试右键，以管理员身份运行后再操作！");
                 label5.Text = "卸载异常";
             }        
         }
@@ -171,9 +171,9 @@ namespace xqns
                 ServiceStart();
                 label5.Text = "服务已启动";
             }
-            catch (Exception ex)
+            catch // (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("发生错误：请尝试右键，以管理员身份运行后再操作！");
                 label5.Text = "安装异常";
             }
         }
