@@ -17,8 +17,13 @@ namespace xqns
 {
     public partial class Form1 : Form
     {
-        const string website = "https://www.xqns.com";
-        const string loginurl = "https://login.xqns.com/login.php";
+        /// <summary>
+        /// fix by cong, if windows xp or 2003 , can't login use https, now use http !
+        /// 为了兼容windows XP or 2003 系统，放弃 https，因为，现有签名全部使用 sha2 ，XP 和 2003 无法支持。
+        /// </summary>
+        const string website = "http://www.xqns.com";             
+        const string loginurl = "http://login.xqns.com/login.php";
+
         const string sname = "xqnsvc";
         const string fname = "\\xqns.xml";
         string url = "";
@@ -58,6 +63,14 @@ namespace xqns
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var ver = System.Environment.OSVersion.Version.Major + "." + System.Environment.OSVersion.Version.Minor;
+            
+
+
+            MessageBox.Show(ver+ System.Environment.OSVersion.Version.ToString());
+
+           
+       
             readxml();
             if (textBox1.Text!="" && textBox2.Text != "" && textBox3.Text != "")
             {
@@ -355,7 +368,7 @@ namespace xqns
                 //Create the root node and append into doc 
                 var el = xmlDoc.CreateElement("PostData");
                 XmlAttribute attrID = xmlDoc.CreateAttribute("website");
-                attrID.Value = "https://www.xqns.com";
+                attrID.Value = website;
                 el.Attributes.Append(attrID);
                 XmlAttribute attrName = xmlDoc.CreateAttribute("name");
                 attrName.Value = "xqns";
