@@ -63,14 +63,7 @@ namespace xqns
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var ver = System.Environment.OSVersion.Version.Major + "." + System.Environment.OSVersion.Version.Minor;
-            
-
-
-            MessageBox.Show(ver+ System.Environment.OSVersion.Version.ToString());
-
-           
-       
+               
             readxml();
             if (textBox1.Text!="" && textBox2.Text != "" && textBox3.Text != "")
             {
